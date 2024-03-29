@@ -3,4 +3,5 @@ export interface UploadPostRequest {
     image: string;
     title: string;
     score: number;
+    filename: string;
 }

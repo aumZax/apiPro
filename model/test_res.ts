@@ -5,5 +5,6 @@ export interface RegisterPostRequest {
     username: string;
     password: string;
     conpassword : string;
+    newpassword : string;
     profile : string;
 }

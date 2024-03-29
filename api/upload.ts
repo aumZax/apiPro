@@ -66,8 +66,8 @@ router.post("/add/", async (req, res) => {
   
 
   let sql =
-    "INSERT INTO `images`(`uid`, `image`, `title`, `score`) VALUES (?,?,?,?)";
-  sql = mysql.format(sql, [add.uid, add.image, add.title, add.score]);
+    "INSERT INTO `images`(`uid`, `image`, `title`, `score`, `filename`) VALUES (?,?,?,?,?)";
+  sql = mysql.format(sql, [add.uid, add.image, add.title, add.score,add.filename]);
   conn.query(sql, (err, result) => {
     if (err) throw err;
     res
@@ -82,7 +82,7 @@ router.post("/add/", async (req, res) => {
 
 
 
-//delete
+//delete firebase
 router.delete("/:name", async (req, res) => {
   const filenameToDelete =req.params.name;
   const fileRef = ref(storage, "/images/"+ filenameToDelete);
@@ -93,4 +93,20 @@ router.delete("/:name", async (req, res) => {
     console.error(`Error deleting file ${filenameToDelete}:`, error);
     res.status(500).json({ error: 'An error occurred while deleting the file.' });
   }
+});
+
+
+//delete database
+router.delete("/dabase/:image_id", async (req, res) => {
+  const image_id =req.params.image_id;
+
+  let sql =
+    "DELETE FROM images WHERE image_id = ?";
+  sql = mysql.format(sql, [image_id]);
+  conn.query(sql, (err, result) => {
+    if (err) throw err;
+    res
+      .status(200)
+      .json({ affected_row: result.affectedRows });
+  });
 });

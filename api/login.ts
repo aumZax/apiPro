@@ -48,4 +48,24 @@ router.post("/", async (req, res) => {
 });
 
 
-  
+router.put("/:uid", async(req, res) =>{
+  const uid = req.params.uid;
+  const userM: RegisterPostRequest = req.body;
+  const hashedPassword = await bcrypt.hash(userM.newpassword, saltRounds);
+  let sql = "UPDATE users SET profile = ?, name = ?,password = ?  WHERE uid = ?";
+
+    sql = mysql.format(sql, [
+      userM.profile,
+      userM.name,
+      hashedPassword,
+      uid
+
+    ]);
+  conn.query(sql, (err, result) => {
+    if (err) throw err;
+    res
+      .status(201)
+      .json({ affected_row: result.affectedRows });
+  });
+
+});

@@ -13,6 +13,9 @@ import { router as deleterank } from "./api/deleterank";
 import { router as checkrank } from "./api/checkrank";
 import { router as imageuser } from "./api/imageuser";
 import { router as grap } from "./api/grap";
+import { router as adminselect } from "./api/adminselect";
+import { router as adminrank } from "./api/adminrank";
+
 
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -43,6 +46,10 @@ app.use("/deleterank", deleterank);
 app.use("/checkrank", checkrank);
 app.use("/imageuser", imageuser);
 app.use("/grap", grap);
+app.use("/adminselect", adminselect);
+app.use("/adminrank", adminrank);
+
+
 
 
 // app.use("/",(req,res)=>{

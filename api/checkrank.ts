@@ -8,7 +8,7 @@ export const router = express.Router();
 
 router.get('/', async (req, res) => {
     const today = new Date().toISOString().slice(0, 10);
-    let sql = "SELECT * FROM votes INNER JOIN statistics ON votes.vid = statistics.vote_id INNER JOIN images ON votes.image_id = images.image_id INNER JOIN users ON images.uid = users.uid WHERE DATE(votes.date) = ? ORDER BY votes.totalscore DESC LIMIT 20";
+    let sql = "SELECT * FROM votes INNER JOIN statistics ON votes.vid = statistics.vote_id INNER JOIN images ON votes.image_id = images.image_id INNER JOIN users ON images.uid = users.uid WHERE DATE(votes.date) = ? ORDER BY votes.totalscore DESC";
 
     conn.query(sql, [today], (err, todayResult) => {
         if (err) {
@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
         yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayStr = yesterday.toISOString().slice(0, 10);
 
-        let yesterdaySql = "SELECT * FROM votes INNER JOIN statistics ON votes.vid = statistics.vote_id INNER JOIN images ON votes.image_id = images.image_id INNER JOIN users ON images.uid = users.uid WHERE DATE(votes.date) = ? ORDER BY votes.totalscore DESC LIMIT 20";
+        let yesterdaySql = "SELECT * FROM votes INNER JOIN statistics ON votes.vid = statistics.vote_id INNER JOIN images ON votes.image_id = images.image_id INNER JOIN users ON images.uid = users.uid WHERE DATE(votes.date) = ? ORDER BY votes.totalscore DESC";
 
         conn.query(yesterdaySql, [yesterdayStr], (err, yesterdayResult) => {
             if (err) {
